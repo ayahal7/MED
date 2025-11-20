@@ -1,0 +1,458 @@
+<html>
+
+<head>
+        <title></title>
+        <link rel="stylesheet" type="text/css" href="format.css">
+        <style type="text/css">
+                a:link {
+                        font-family: Arial;
+                        font-size: 10pt;
+                        text-decoration: none;
+                }
+
+                a:visited {
+                        font-family: Arial;
+                        font-size: 10pt;
+                        text-decoration: none;
+                }
+
+                a:hover {
+                        color: #FF3333;
+                        text-decoration: none;
+                        font-weight: normal;
+                        font-size: 10pt;
+                }
+
+                body {
+                        font-size: large;
+                }
+        </style>
+</head>
+
+<body>
+
+        <iframe src="oben.html" width="800" height="120" name="IFrame3" id="IFrame3" scrolling="no" frameborder="0">
+                <p>Ihr Browser kann leider keine eingebetteten Frames anzeigen: Sie können die eingebettete Seite
+                        über den folgenden Link öffnen.</p>
+        </iframe>
+
+        <h2>Uebung 1</h2>
+        <br>
+        <h1>1.a)</h1>
+        <p class="fragen">
+                Schneide aus den dir zugeschickten Audio-Files ab dem Zeitpunkt jeweils ein Stück mit der
+                Länge 5
+                Sekunden und speichere dieses als WAV-Datei ab. Parameter für Musik: fa=44,1 kHz, stereo, für
+                Sprache: fa=8 kHz mono, beide 16 bit Auflösung. Beim Schneiden achtest du darauf, dass der
+                Schnitt am Beginn einer musikalischen Figur bzw. eines Satzes liegt.
+        </p>
+
+        <br>
+        The File: Übungsgruppe 13, Materialien/musik_13.wav <br>
+        IO State: READING <br>
+        <br>
+        Headerausgabe <br>
+        Channels: 2 <br>
+        Frames: 221081 <br>
+        Sample Rate: 44100 <br>
+        Valid Bits: 16 <br>
+        Bytes per sample: 2 <br>
+        <p>Musikaufnahme</p>
+        <audio controls>
+                <source src="./audio/musik_mono.wav" type="audio/wav">
+        </audio>
+        <br>
+        The File: Übungsgruppe 13, Materialien/sprache_13.wav <br>
+        IO State: READING <br>
+        <br>
+        Headerausgabe <br>
+        Channels: 1 <br>
+        Frames: 40035 <br>
+        Sample Rate: 8000 <br>
+        Valid Bits: 16 <br>
+        Bytes per sample: 2 <br>
+
+        <h1>1b)</h1>
+
+        <p class="fragen">Erkläre, warum die Audio-Files unterschiedliche Abtastfrequenzen haben.</p>
+        <p>Musik wird mit 44,1 kHz abgetastet, da sie hohe Frequenzen bis etwa 20 kHz enthält und so eine hohe
+                Klangqualität gewährleistet ist (Nyquist-Theorem). Sprache hingegen reicht mit einer Abtastrate von 8
+                kHz aus, weil sie nur Frequenzen bis etwa 3,4 kHz umfasst. Eine niedrigere Abtastrate spart
+                Speicherplatz, ohne die Verständlichkeit zu beeinträchtigen.</p>
+
+        <br>
+        <h1>1c)</h1>
+        <p class="fragen">Lies die Musik- und die Sprachdatei mit wave_io ein und erkläre die Angaben im Header!
+        </p>
+        <p>
+
+        <h2>Musikdatei – <em>musik_13.wav</em></h2>
+        <table>
+                <tr>
+                        <th>Channels</th>
+                        <td>2 &rarr; Stereo</td>
+                </tr>
+                <tr>
+                        <th>Frames</th>
+                        <td>221 081 &rarr; Anzahl der Abtastwerte pro Kanal</td>
+                </tr>
+                <tr>
+                        <th>Sample Rate</th>
+                        <td>44 100 Hz &rarr; deckt hörbaren Frequenzbereich bis 20 kHz ab</td>
+                </tr>
+                <tr>
+                        <th>Valid Bits</th>
+                        <td>16 Bit PCM &rarr; hohe Signalauflösung (65 536 Amplitudenstufen)</td>
+                </tr>
+                <tr>
+                        <th>Bytes per Sample</th>
+                        <td>2 Byte (16 Bit)</td>
+                </tr>
+        </table>
+        <p><strong>Abgeleitete Größen:</strong><br>
+                BlockAlign = 2 Kanäle × 2 Byte = 4 Byte/Frame<br>
+                ByteRate = 44 100 × 4 = 176 400 B/s<br>
+                Dauer = 221 081 / 44 100 ≈ 5,01 s
+        </p>
+
+
+        <h2>Sprachdatei – <em>sprache_13.wav</em></h2>
+        <table>
+                <tr>
+                        <th>Channels</th>
+                        <td>1 &rarr; Mono</td>
+                </tr>
+                <tr>
+                        <th>Frames</th>
+                        <td>40 000 &rarr; Anzahl der Abtastwerte pro Kanal</td>
+                </tr>
+                <tr>
+                        <th>Sample Rate</th>
+                        <td>8 000 Hz &rarr; ausreichend für Sprachverständlichkeit (bis ca. 4 kHz)</td>
+                </tr>
+                <tr>
+                        <th>Valid Bits</th>
+                        <td>16 Bit PCM &rarr; gute Signalauflösung</td>
+                </tr>
+                <tr>
+                        <th>Bytes per Sample</th>
+                        <td>2 Byte (16 Bit)</td>
+                </tr>
+        </table>
+        <p><strong>Abgeleitete Größen:</strong><br>
+                BlockAlign = 1 Kanal × 2 Byte = 2 Byte/Frame<br>
+                ByteRate = 8 000 × 2 = 16 000 B/s<br>
+                Dauer = 40 000 / 8 000 = 5,00 s
+        </p>
+
+        </p>
+
+        <br>
+        <h1>1 d)</h1>
+        <p class="fragen">Berechne die Bitrate für die beiden Dateien!</p>
+        <p>
+        <div class="wrap">
+                <h1>Berechnung der Bitrate</h1>
+                <p class="lead">Die Bitrate beschreibt, wie viele Bits pro Sekunde verarbeitet oder gespeichert werden.
+                        Sie ergibt sich aus der Formel:</p>
+
+                <p><strong>Formel:</strong><br>
+                        <em>Bitrate [bit/s] = Abtastfrequenz [Hz] * Wortbreite [bit] * Anzahl der Kanäle</em>
+                </p>
+
+                <h2>🎵 Beispiel 1 – Musikdatei (<em>musik_13.wav</em>)</h2>
+                <p><strong>Gegeben:</strong></p>
+                <ul>
+                        <li>Abtastfrequenz: 44 100 Hz</li>
+                        <li>Wortbreite: 16 Bit</li>
+                        <li>Kanäle: 2 (Stereo)</li>
+                </ul>
+                <p><strong>Berechnung:</strong><br>
+                        44 100 * 16 * 2 = 1 411 200 bit/s
+                </p>
+                <p><strong>Ergebnis:</strong><br>
+                        1 411 200 bit/s = 1 411,2 kbps = 1,411 Mbps
+                </p>
+
+                <h2>🎙️ Beispiel 2 – Sprachdatei (<em>sprache_13.wav</em>)</h2>
+                <p><strong>Gegeben:</strong></p>
+                <ul>
+                        <li>Abtastfrequenz: 8 000 Hz</li>
+                        <li>Wortbreite: 16 Bit</li>
+                        <li>Kanäle: 1 (Mono)</li>
+                </ul>
+                <p><strong>Berechnung:</strong><br>
+                        8 000 * 16 * 1 = 128 000 bit/s
+                </p>
+                <p><strong>Ergebnis:</strong><br>
+                        128 000 bit/s = 128 kbps = 0,128 Mbps
+                </p>
+        </div>
+        </p>
+
+        <br>
+        <h1>2 a)</h1>
+        <p class="fragen">Modifiziere wave_io dahingehend, dass die Samples in der WAV-Datei in eine (lesbare)
+                ASCII-Datei geschrieben werden. Lies die von mir geschickten Sinusdateien (Sampling-Frequenz: 16 kHz)
+                ein und bestimme aus den resultierenden Zahlenfolgen in der ASCII-Datei die Frequenz der
+                Sinus-Schwingungen. Begründe!</p>
+
+        <div class="wrap">
+                <h1>Frequenzbestimmung</h1>
+
+                <p>Das Programm <strong>wave_io</strong> wurde so erweitert, dass die Samples der WAV-Datei in eine
+                        ASCII-Datei geschrieben werden:</p>
+                <pre><code>
+File dir = new File(".");
+String p = dir.getAbsolutePath();
+Path path = Paths.get(p, "Musik.txt");
+BufferedWriter writer = Files.newBufferedWriter(path);
+
+for (int i = 0; i < samples; i++) {
+    writer.write(readWavFile.sound[i] + "\n"); // in Textdatei schreiben
+    System.out.println(readWavFile.sound[i]);  // auf Terminal ausgeben
+}
+writer.close();
+      </code></pre>
+                <p>Jeder Wert entspricht einem Abtastpunkt (Sample) der Sinusschwingung.</p>
+
+                <h2>Ergebnisse</h2>
+
+                <h3>sine_hi02</h3>
+                <p>Alle 16 Werte wiederholt sich das Muster → eine Periode.</p>
+                <p>Samplingfrequenz: 16 kHz = 16 000 Samples pro Sekunde</p>
+                <p><strong>Frequenz:</strong> f = 16 000 / 16 = 1 000 Hz</p>
+
+                <h3>sine_lo01</h3>
+                <p>Alle 16 Werte wiederholt sich das Muster → eine Periode.</p>
+                <p>Samplingfrequenz: 16 kHz = 16 000 Samples pro Sekunde</p>
+                <p><strong>Frequenz:</strong> f = 16 000 / 16 = 1 000 Hz</p>
+        </div>
+
+
+        <h1>2 b)</h1>
+        <p class="fragen">Überprüfe deine Schätzung mit dem Spektralanalyse-Tool GRAM. (Vorgehensweise: Menüpunkt
+                Analyze File, Einstellungen: Freq Scale: Linear, FFT Size: 512, Time scale: 1msec )</p>
+        <img style="margin-left:150px ;" src="photo/2_b.png" alt="">
+        <p>Die x-Achse (horizontal) zeigt die Frequenzen von 0 Hz bis 8 000 Hz. <br>
+                Die y-Achse (vertikal) zeigt die Amplitude in dB (Lautstärke). <br>
+                Der hohe Peak links zeigt, wo dein Sinuston seine Hauptfrequenz hat. <br>
+                Überprüfung mit PRAAT </p>
+        <img style="margin-left:150px ;" src="photo/2_b2.png" alt=""> <br>
+        pIm Spektrogramm ist eine dominante Linie bei etwa 500 Hz sichtbar. <br>
+        Ursprünglich enthielt die Datei eine höhere Sinusschwingung (≈ 15 500 Hz). <br>
+        Durch die Abtastfrequenz von 16 kHz liegt die Nyquist-Grenze bei 8 kHz, <br>
+        daher wird die Schwingung gespiegelt (Aliasing). <br>
+        Die beobachtete Frequenz (500 Hz) entspricht der Aliasfrequenz: <br>
+        fₐₗᵢₐₛ = | 16 000 - 15 500 | = 500 Hz.
+
+        <h1>2 c)</h1>
+        <p class="fragen">Bei der zeitlichen Diskretisierung eines Analogsignals muss das sogenannte Abtasttheorem
+                eingehalten werden. Wie lautet es und wie lässt sich der Grenzfall, für den es gerade noch gilt,
+                illustrieren? Erstelle hierzu eine Zeichnung und erläutere.</p>
+        <h1>Abtasttheorem</h1>
+        <p>
+                Ein analoges Signal kann nur fehlerfrei digitalisiert werden, wenn die Abtastfrequenz
+                mindestens doppelt so hoch ist wie die höchste Signalfrequenz
+                (<em>f<sub>s</sub> ≥ 2·f<sub>max</sub></em>).
+                Beim Grenzfall wird das Signal gerade noch korrekt erfasst,
+                darunter entsteht Aliasing.
+        </p>
+        <img style="padding-left:150px; width:597px;" src="photo/2_c.png" alt="">
+
+        <h1>2 d)</h1>
+        <p class="fragen">Bei herkömmlichen Soundkarten tritt systembedingt kein Aliasing auf, weil das Audiosignal
+                stets
+                geeignet vorbehandelt wird. Wie sieht diese Vorbehandlung aus?
+        </p>
+        <p>
+                Bei herkömmlichen Soundkarten tritt kein Aliasing auf,
+                weil das Audiosignal vor dem Abtasten durch einen analogen Tiefpassfilter geführt wird.
+                Dieser entfernt alle Frequenzen oberhalb der halben Abtastfrequenz (<em>f<sub>a</sub>/2</em>).
+                <img style="padding-left:150px; width:597px;" src="photo/2_d.png" alt="">
+
+        </p>
+        <p>
+                Beim Downsampling wird die Abtastrate halbiert, indem jeder zweite Abtastwert des Signals verworfen
+                wird.
+                Dadurch enthält das neue Signal nur noch die Hälfte der Samples und besitzt eine halb so hohe
+                Abtastfrequenz.
+        </p>
+        <h1>2 e)</h1>
+        <p class="fragen">Mit einem kleinen Trick lässt sich Aliasing jedoch nachweisen. Diese auch als Down-Sampling
+                bekannte Methode besteht darin, dass man bei einer WAV-Datei z.B. jeden zweiten Abtastwert
+                wegwirft. Man erhält so eine Wellenform, die genau die Hälfte der ursprünglichen Abtastfrequenz
+                aufweist. Wenn man das Signal nicht vorher bandbegrenzt hat, können Aliasing-Verzerrungen
+                hörbar werden.
+                Modifiziere wave_io dahingehend, dass vom eingelesenen Audiosignal jeder zweite Abtastwert
+                verworfen wird und das resultierende Signal abgespeichert wird. Der Header muss natürlich
+                entsprechend verändert werden!
+        </p>
+        <p><strong>Ziel:</strong> Halbierung der Abtastrate (z. B. 16 kHz → 8 kHz) durch Entfernen jedes zweiten
+                Abtastwerts.</p>
+
+        <h2>Code:</h2>
+
+        <pre><code>
+//2e Downsampling
+			for (int i=0; i < samples/2;i++) {
+
+				readWavFile.sound[i] = readWavFile.sound[i * 2];
+			 
+			 }
+			 
+			 sampleRate /= 2;
+			 
+			 samples /= 2;
+			 
+			 numFrames /= 2;
+</code></pre>
+
+        <h1>2 f)</h1>
+
+        <p class="fragen">
+                Beim Downsampling wird die Abtastfrequenz halbiert (16 kHz → 8 kHz).
+                Ohne Bandbegrenzung wird das Abtasttheorem verletzt, und es entstehen Aliasing-Verzerrungen.
+                Wird das Signal jedoch vorher auf unter 4 kHz gefiltert, bleibt das Abtasttheorem erfüllt,
+                und die Datei <em>sine_hi01_down.wav</em> ändert sich nicht.
+        </p>
+
+        <h2>sine_lo01_downsampling</h2>
+        <audio controls>
+                <source src="audioabgabe/sine_lo01_downsampling.wav" type="audio/wav">
+        </audio>
+        <h2>sine_hi05_downsampling</h2>
+        <audio controls>
+                <source src="audioabgabe/sine_hi05_downsampling.wav" type="audio/wav">
+        </audio>
+
+        <h1>2 g)</h1> Nun wende das Downsampling auf deine Sprachdatei an und beschreibe, wie sich der Klang
+        verändert. Erkläre, warum das passiert!
+
+        <audio controls>
+                <source src="audioabgabe/sprache_13_downsampling.wav" type="audio/wav">
+        </audio>
+        <h1>3 a )</h1>
+        <p class="fragen">Die herkömmlichen PC-Soundkarten arbeiten meist entweder mit 16 oder 8 bit-Auflösung. Wie
+                groß ist die Anzahl bei diesen beiden Werten darstellbaren Amplitudenwerten?</p>
+        <h1> Bit-Auflösung und Amplitudenwerte</h1>
+
+        <p>
+                Bei einer <strong>n-Bit-Auflösung</strong> können insgesamt <em>2ⁿ</em> verschiedene Amplitudenwerte
+                dargestellt werden.
+        </p>
+
+        <ul>
+                <li>8 Bit → 2⁸ = <strong>256</strong> Stufen</li>
+                <li>16 Bit → 2¹⁶ = <strong>65.536</strong> Stufen</li>
+        </ul>
+
+        <p>
+                Bei 8 Bit ist das Quantisierungsrauschen hörbar,
+                bei 16 Bit (CD-Qualität) dagegen kaum wahrnehmbar.
+        </p>
+        <h1>3_b</h1>
+        <p class="fragen"> Modifiziere wave_io dahingehend, dass die Bitanzahl reduziert wird. Dazu werden alle Samples
+                durch eine Potenz von 2 geteilt (Integer-Division ohne Rest). Damit das resultierende Signal nicht
+                leiser wird als das Original, wird die Operation durch Multiplikation mit derselben 2er Potenz
+                kompensiert. Zu beachten: Der Datentyp hat nach wie vor 16 bit!
+        </p>
+        <pre><code>
+int reduced_bits = 8; 
+
+for (int i = 0; i < samples; i++) {
+    readWavFile.sound[i] /= Math.pow(2, reduced_bits);
+    readWavFile.sound[i] *= Math.pow(2, reduced_bits);
+}
+</code></pre>
+
+        <h1>3 c)</h1>
+        <p class="fragen">Mit dem entstandenen Programm sollen nun die in Aufgabe 1 erzeugten Wave-Dateien (Sprache
+                und Musik) bitreduziert werden. Ab welcher Bitanzahl tritt eine hörbare, also deutliche
+                Verschlechterung der Qualität ein? Bei wie viel Bit ist das Sprachsignal noch verständlich?
+        </p>
+        <h3>Musik Bitreduzierung:</h3> <br>
+        <h2>Musik_16bit</h2> <br>
+        <audio controls>
+                <source src="audioabgabe/musik_16bit.wav" type="audio/wav">
+        </audio>
+        <img src="photo/musik_16_Bit.png" alt="">
+
+        <h2>Musik_8bit</h2> <br>
+        <audio controls>
+                <source src="audioabgabe/musik_8bit.wav" type="audio/wav">
+        </audio>
+        <img src="photo/musik_8_Bit.png" alt="">
+
+        <h3>Sprache Bitreduzierung:</h3> <br>
+        <h2>Sprache_16bit</h2> <br>
+        <audio controls>
+                <source src="audioabgabe/sprache_16bit.wav" type="audio/wav">
+        </audio>
+        <img src="photo/sprache_16_Bit.png" alt="">
+
+        <h2>musik_8bit</h2> <br>
+        <audio controls>
+                <source src="audioabgabe/sprache_8bit.wav" type="audio/wav">
+        </audio>
+        <img src="photo/sprache_8_Bit.png" alt="">
+
+        <p>
+                Ab etwa <strong>8 Bit</strong> wird das Quantisierungsrauschen deutlich hörbar,
+                das Sprachsignal bleibt jedoch noch verständlich.
+                Unterhalb von 8 Bit verschlechtert sich die Qualität stark.
+        </p>
+
+        <h1>3 d)</h1>
+        <p class="fragen">Was charakterisiert das entstehende Quantisierungsgeräusch bei der Bitreduzierung und macht es
+                besonders störend?</p>
+        <p>Das Quantisierungsgeräusch entsteht durch Rundungsfehler bei der Bitreduzierung.
+
+                Es äußert sich als rauschähnliches, verzerrendes Hintergrundsignal, das besonders bei leisen Passagen
+                <br>
+                auffällt, weil der Fehleranteil im Verhältnis zum Nutzsignal größer wird.
+        </p>
+
+        <h1>3 e)</h1>
+        <p class="fragen">Modifiziere dein Programm noch einmal so, dass auch das Differenzsignal zwischen Original und
+                bitreduziertem Signal, d.h. der Quantisierungsfehler ausgegeben werden kann. Dabei musst du
+                bedenken, dass z.B. bei der 1 Bit Reduzierung das Quantisierungsrauschen nur von -1 bis +1
+                verlaufen würde. Dieser Wertebereich wäre viel zu klein, als dass man das Rauschen beim
+                Abspielen als 16bit-Wert noch hören könnte. Daher muss das Rauschen durch Multiplikation mit
+                einer 2er Potenz verstärkt werden. In anderen Worten: Hat man vorher durch 2^n geteilt, sollte
+                man das Differenzsignal vor dem Abspeichern mit 2^(16-n-1) multiplizieren. So ist sichergestellt,
+                dass der Verstärkungsfaktor mit der Anzahl der gelöschten Bits kleiner wird.
+        </p>
+        <pre><code>
+int reducedBits = 8; 
+
+ 
+
+for (int i = 0; i < samples; i++) { 
+
+    short original = readWavFile.sound[i]; 
+
+ 
+
+    readWavFile.sound[i] /= Math.pow(2, reducedBits); 
+
+    readWavFile.sound[i] *= Math.pow(2, reducedBits); 
+
+ 
+
+    // Differenzsignal (Quantisierungsrauschen) berechnen und verstärken 
+
+    readWavFile.sound[i] = (short) ((readWavFile.sound[i] - original) * 
+
+                                    Math.pow(2, 16 - reducedBits - 1)); 
+
+} 
+</code></pre>
+        <h1>3 f)</h1>
+        <p class="fragen">Welchen Charakter hat das Rauschen bei einer Reduktion um 1bit und wie verändert es sich bei
+                zunehmender Bit-Reduktion?</p>
+        <p>Bei einer Reduktion um 1 Bit entsteht ein deutlich hörbares Rauschen. Mit zunehmender Bitreduktion wird das
+                Rauschen stärker und das Signal immer verzerrter.</p>
+</body>
+
+</html>
